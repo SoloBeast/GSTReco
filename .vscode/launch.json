@@ -6,7 +6,7 @@
             "request": "launch",
             "type": "al",
             "environmentType": "Sandbox",
-            "environmentName": "IxigoTest",
+            "environmentName": "IxigoNew",
             "schemaUpdateMode": "ForceSync",
             "breakOnError": "All",
             "launchBrowser": true,
