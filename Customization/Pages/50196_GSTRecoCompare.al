@@ -1,6 +1,7 @@
 page 50197 "GST Reco Compare"
 {
     ApplicationArea = all;
+    PageType = List;
     layout
     {
         area(Content)
