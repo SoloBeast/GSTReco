@@ -1,3 +1,5 @@
+//Hemant Changes
+
 table 50012 PurchaseTransactions
 {
     DataClassification = ToBeClassified;
