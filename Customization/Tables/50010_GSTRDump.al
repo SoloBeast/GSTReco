@@ -7,8 +7,8 @@ table 50010 GSTRDump
         field(1; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
-            AutoIncrement = true;
-            Editable = false;
+            // AutoIncrement = true;
+            // Editable = false;
 
         }
         field(2; "File Type."; Option)
@@ -157,13 +157,14 @@ table 50010 GSTRDump
             DataClassification = ToBeClassified;
 
         }
-
-
-
-
-
-
     }
+    // keys
+    // {
+    //     key(PK; "File Type.")
+    //     {
+    //         Clustered = true;
+    //     }
+    // }
 
     var
         myInt: Integer;

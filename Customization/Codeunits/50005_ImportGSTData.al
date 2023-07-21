@@ -2,6 +2,12 @@ codeunit 50005 "Import GST  Data"
 {
     trigger OnRun()
     begin
+        recGSTRDump.Reset();
+        if recGSTRDump.FindLast() then
+            intEntryNo := recGSTRDump."Entry No."
+        else
+            intEntryNo := 0;
+
         if File.UploadIntoStream('Select Billing File', '', '', txtFileName, ImportInstream) then begin
             tempExcelBuffer.Reset();
             tempExcelBuffer.DeleteAll();
@@ -41,7 +47,9 @@ codeunit 50005 "Import GST  Data"
         intLineNo := 0;
 
         for intLineNo := 7 to intTotalRows do begin
+            intEntryNo += 1;
             recGSTRDump.Init();
+            recGSTRDump."Entry No." := intEntryNo;
 
             if tempExcelBuffer.Get(intLineNo, 1) then
                 recGSTRDump."GSTIN Supplier" := tempExcelBuffer."Cell Value as Text";
@@ -88,7 +96,7 @@ codeunit 50005 "Import GST  Data"
             if tempExcelBuffer.Get(intLineNo, 22) then
                 Evaluate(recGSTRDump."IRN Date", tempExcelBuffer."Cell Value as Text");
             recGSTRDump."File Type." := recGSTRDump."File Type."::B2B;
-            recGSTRDump.Insert();
+            recGSTRDump.Insert(true);
         end;
     end;
 
@@ -114,8 +122,9 @@ codeunit 50005 "Import GST  Data"
         intLineNo := 0;
 
         for intLineNo := 7 to intTotalRows do begin
-            recGSTRDump.Reset();
+            intEntryNo += 1;
             recGSTRDump.Init();
+            recGSTRDump."Entry No." := intEntryNo;
 
             if tempExcelBuffer.Get(intLineNo, 1) then
                 recGSTRDump."GSTIN Supplier" := tempExcelBuffer."Cell Value as Text";
@@ -216,56 +225,43 @@ codeunit 50005 "Import GST  Data"
         intLineNo := 0;
 
         for intLineNo := 7 to intTotalRows do begin
+            intEntryNo += 1;
+            recGSTRDump.Init();
+            recGSTRDump."Entry No." := intEntryNo;
 
-            intTotalColumn := 0;
-            intTotalRows := 0;
-            tempExcelBuffer.Reset();
-            if tempExcelBuffer.FindLast() then
-                intTotalRows := tempExcelBuffer."Row No.";
-            tempExcelBuffer.SetRange("Row No.", 1);
-            intTotalColumn := tempExcelBuffer.Count;
+            if tempExcelBuffer.Get(intLineNo, 1) then
+                Evaluate(recGSTRDump."Icegate Reference Date", tempExcelBuffer."Cell Value as Text");
+
+            if tempExcelBuffer.Get(intLineNo, 2) then
+                Evaluate(recGSTRDump."Port Code", tempExcelBuffer."Cell Value as Text");
+
+            if tempExcelBuffer.Get(intLineNo, 3) then
+                recGSTRDump."Invoice No" := tempExcelBuffer."Cell Value as Text";
+
+            if tempExcelBuffer.Get(intLineNo, 4) then
+                Evaluate(recGSTRDump."Invocie Date", tempExcelBuffer."Cell Value as Text");
+
+            if tempExcelBuffer.Get(intLineNo, 5) then
+                Evaluate(recGSTRDump."Taxable Value", tempExcelBuffer."Cell Value as Text");
+
+            if tempExcelBuffer.Get(intLineNo, 6) then
+                Evaluate(recGSTRDump."Integrated Tax", tempExcelBuffer."Cell Value as Text");
+
+            if tempExcelBuffer.Get(intLineNo, 7) then
+                Evaluate(recGSTRDump.Cess, tempExcelBuffer."Cell Value as Text");
+
+            if tempExcelBuffer.Get(intLineNo, 8) then
+                Evaluate(recGSTRDump."Amended (Yes)", tempExcelBuffer."Cell Value as Text");
+
+            recGSTRDump."File Type." := recGSTRDump."File Type."::IMPG;
+            recGSTRDump.Insert();
+
             intLineNo := 0;
 
             for intLineNo := 7 to intTotalRows do begin
-                recGSTRDump.Reset();
-                recGSTRDump.Init();
 
-                if tempExcelBuffer.Get(intLineNo, 1) then
-                    Evaluate(recGSTRDump."Icegate Reference Date", tempExcelBuffer."Cell Value as Text");
-
-                if tempExcelBuffer.Get(intLineNo, 2) then
-                    Evaluate(recGSTRDump."Port Code", tempExcelBuffer."Cell Value as Text");
-
-                if tempExcelBuffer.Get(intLineNo, 3) then
-                    recGSTRDump."Invoice No" := tempExcelBuffer."Cell Value as Text";
-
-                if tempExcelBuffer.Get(intLineNo, 4) then
-                    Evaluate(recGSTRDump."Invocie Date", tempExcelBuffer."Cell Value as Text");
-
-                if tempExcelBuffer.Get(intLineNo, 5) then
-                    Evaluate(recGSTRDump."Taxable Value", tempExcelBuffer."Cell Value as Text");
-
-                if tempExcelBuffer.Get(intLineNo, 6) then
-                    Evaluate(recGSTRDump."Integrated Tax", tempExcelBuffer."Cell Value as Text");
-
-                if tempExcelBuffer.Get(intLineNo, 7) then
-                    Evaluate(recGSTRDump.Cess, tempExcelBuffer."Cell Value as Text");
-
-                if tempExcelBuffer.Get(intLineNo, 8) then
-                    Evaluate(recGSTRDump."Amended (Yes)", tempExcelBuffer."Cell Value as Text");
-
-                recGSTRDump."File Type." := recGSTRDump."File Type."::IMPG;
-                recGSTRDump.Insert();
-
-                intLineNo := 0;
-
-                for intLineNo := 7 to intTotalRows do begin
-
-                end;
-            end
-
-
-        end;
+            end;
+        end
     end;
 
     var
@@ -274,4 +270,5 @@ codeunit 50005 "Import GST  Data"
         txtFileName: Text;
         txtSheetname: Option "B2B","B2BA","B2B-CDNR","B2B-CDNRA","IMPG";
         recGSTRDump: Record GSTRDump;
+        intEntryNo: Integer;
 }
