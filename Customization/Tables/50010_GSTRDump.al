@@ -107,7 +107,7 @@ table 50010 GSTRDump
             DataClassification = ToBeClassified;
 
         }
-        field(21; "Applicable % of Tax Rate"; Decimal)
+        field(21; "Applicable % of Tax Rate"; Text[5])
         {
             DataClassification = ToBeClassified;
 
