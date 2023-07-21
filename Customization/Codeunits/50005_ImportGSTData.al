@@ -197,8 +197,6 @@ codeunit 50005 "Import GST  Data"
 
             recGSTRDump."File Type." := recGSTRDump."File Type."::"B2B-CDNR";
             recGSTRDump.Insert();
-
-            intLineNo := 0;
         end;
     end;
 
@@ -255,12 +253,6 @@ codeunit 50005 "Import GST  Data"
 
             recGSTRDump."File Type." := recGSTRDump."File Type."::IMPG;
             recGSTRDump.Insert();
-
-            intLineNo := 0;
-
-            for intLineNo := 7 to intTotalRows do begin
-
-            end;
         end
     end;
 
