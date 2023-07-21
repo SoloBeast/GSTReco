@@ -7,17 +7,26 @@ codeunit 50005 "Import GST  Data"
             tempExcelBuffer.DeleteAll();
 
             Evaluate(txtSheetname, tempExcelBuffer.SelectSheetsNameStream(ImportInstream));
+            if txtSheetname = txtSheetname::B2B then
+                ImportB2BFile(Format(txtSheetname));
+
+            if txtSheetname = txtSheetname::"B2B-CDNR" then
+                ImportB2B_CDNRFile(Format(txtSheetname));
+
+            if txtSheetname = txtSheetname::IMPG then
+                ImportIMPGFile(Format(txtSheetname));
+
         end
     end;
 
-    local procedure ImportB2BFile()
+    local procedure ImportB2BFile(txtSheetName: Text)
     var
         intTotalColumn: Integer;
         intTotalRows: Integer;
         intLineNo: Integer;
     begin
         tempExcelBuffer.LockTable();
-        tempExcelBuffer.OpenBookStream(ImportInstream, Format(txtSheetname));
+        tempExcelBuffer.OpenBookStream(ImportInstream, txtSheetName);
         tempExcelBuffer.SetReadDateTimeInUtcDate(true);
         tempExcelBuffer.ReadSheet();
 
@@ -85,14 +94,14 @@ codeunit 50005 "Import GST  Data"
     end;
 
 
-    local procedure ImportB2B_CDNRFile()
+    local procedure ImportB2B_CDNRFile(txtSheetName: Text)
     var
         intTotalColumn: Integer;
         intTotalRows: Integer;
         intLineNo: Integer;
     begin
         tempExcelBuffer.LockTable();
-        tempExcelBuffer.OpenBookStream(ImportInstream, Format(txtSheetname));
+        tempExcelBuffer.OpenBookStream(ImportInstream, txtSheetName);
         tempExcelBuffer.SetReadDateTimeInUtcDate(true);
         tempExcelBuffer.ReadSheet();
 
@@ -186,14 +195,14 @@ codeunit 50005 "Import GST  Data"
     end;
 
 
-    local procedure ImportIMPGFile()
+    local procedure ImportIMPGFile(txtSheetName: Text)
     var
         intTotalColumn: Integer;
         intTotalRows: Integer;
         intLineNo: Integer;
     begin
         tempExcelBuffer.LockTable();
-        tempExcelBuffer.OpenBookStream(ImportInstream, Format(txtSheetname));
+        tempExcelBuffer.OpenBookStream(ImportInstream, txtSheetName);
         tempExcelBuffer.SetReadDateTimeInUtcDate(true);
         tempExcelBuffer.ReadSheet();
 

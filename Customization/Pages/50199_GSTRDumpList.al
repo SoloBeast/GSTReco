@@ -186,6 +186,15 @@ page 50199 GSTRDump
 
                 end;
             }
+            action(uploadGSTFile)
+            {
+                Caption = 'Upload GST File';
+                ApplicationArea = all;
+                Promoted = true;
+                PromotedCategory = Process;
+                Image = Import;
+                RunObject = codeunit "Import GST  Data";
+            }
         }
     }
 }
