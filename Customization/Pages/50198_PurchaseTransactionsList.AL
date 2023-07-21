@@ -25,6 +25,7 @@ page 50198 Purchasetransactions
                 field("Vendor Code"; Rec."Vendor Code")
                 {
                     ApplicationArea = All;
+                    Editable = false;
 
                 }
                 field("Vendor Name"; Rec."Vendor Name")
