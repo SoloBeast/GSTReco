@@ -8,6 +8,7 @@ table 50010 GSTRDump
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
+            Editable = false;
 
         }
         field(2; "File Type."; Option)

@@ -42,6 +42,22 @@ page 50198 Purchasetransactions
                     ApplicationArea = All;
 
                 }
+                field("Place of Supply"; Rec."Place of Supply")
+                {
+                    ApplicationArea = All;
+
+                }
+                Field(RCM; Rec.RCM)
+                {
+                    ApplicationArea = All;
+
+                }
+                field("GST Rate%"; Rec."GST Rate%")
+                {
+                    ApplicationArea = All;
+
+                }
+
                 field("IGST Value"; Rec."IGST Value")
                 {
                     ApplicationArea = All;

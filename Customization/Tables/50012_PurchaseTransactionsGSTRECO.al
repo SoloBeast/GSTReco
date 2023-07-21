@@ -8,6 +8,8 @@ table 50012 PurchaseTransactions
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
+            Editable = False;
+
         }
         field(2; "Vendor GST No."; Code[16])
         {
@@ -70,6 +72,21 @@ table 50012 PurchaseTransactions
 
         }
         field(14; "Taxable Amount"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+
+        }
+        field(15; "Place of Supply"; Text[60])
+        {
+            DataClassification = ToBeClassified;
+
+        }
+        field(16; "RCM"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+
+        }
+        field(17; "GST Rate%"; Decimal)
         {
             DataClassification = ToBeClassified;
 
