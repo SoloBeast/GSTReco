@@ -41,7 +41,6 @@ codeunit 50005 "Import GST  Data"
         intLineNo := 0;
 
         for intLineNo := 7 to intTotalRows do begin
-            recGSTRDump.Reset();
             recGSTRDump.Init();
 
             if tempExcelBuffer.Get(intLineNo, 1) then

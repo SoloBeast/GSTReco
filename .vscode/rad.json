@@ -1,1 +1,1 @@
-﻿{"Added":[{"Id":50005,"Kind":11,"Name":"Import GST  Data","PackagePath":"/src/Customization/Codeunits/50005_ImportGSTData.al"}],"Modified":[{"Id":50012,"Kind":10,"Name":"PurchaseTransactions","PackagePath":"/src/Customization/Tables/50012_PurchaseTransactionsGSTRECO.al"},{"Id":50199,"Kind":12,"Name":"GSTRDump","PackagePath":"/src/Customization/Pages/50199_GSTRDumpList.al"}],"Removed":[]}
+﻿{"Added":[],"Modified":[],"Removed":[]}
