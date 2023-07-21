@@ -1,6 +1,6 @@
 page 50199 GSTRDump
 {
-    PageType = List;
+    PageType = ListPart;
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = GSTRDump;
@@ -166,10 +166,6 @@ page 50199 GSTRDump
 
 
             }
-        }
-        area(Factboxes)
-        {
-
         }
     }
 

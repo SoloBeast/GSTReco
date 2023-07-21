@@ -1,6 +1,6 @@
 page 50198 Purchasetransactions
 {
-    PageType = List;
+    PageType = ListPart;
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = PurchaseTransactions;
@@ -94,10 +94,6 @@ page 50198 Purchasetransactions
                     ApplicationArea = All;
                 }
             }
-        }
-        area(Factboxes)
-        {
-
         }
     }
 

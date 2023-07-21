@@ -445,7 +445,12 @@ page 50195 Iappc_Admin_Role_Center2
                         Caption = 'Purchase Transacions';
                         ApplicationArea = all;
                         RunObject = page Purchasetransactions;
-
+                    }
+                    action(GSTRCompare)
+                    {
+                        Caption = 'GSTR Compare';
+                        ApplicationArea = all;
+                        RunObject = page "GST Reco Compare";
                     }
 
                 }
