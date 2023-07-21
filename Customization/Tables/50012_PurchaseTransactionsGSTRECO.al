@@ -91,6 +91,11 @@ table 50012 PurchaseTransactions
             DataClassification = ToBeClassified;
 
         }
+        field(18; "Error Details"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
 
     }
     var

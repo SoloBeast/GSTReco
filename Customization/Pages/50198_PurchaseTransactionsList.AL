@@ -89,6 +89,10 @@ page 50198 Purchasetransactions
                     ApplicationArea = All;
 
                 }
+                field("Error Details"; Rec."Error Details")
+                {
+                    ApplicationArea = All;
+                }
             }
         }
         area(Factboxes)
