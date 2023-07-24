@@ -20,7 +20,7 @@ codeunit 50010 "GST Reco"
                 if recPurchTransaction1.FindSet() then begin
                     repeat
                         //Extact Invoice Number
-                        recPurchTransaction2.Reset();
+                        recPurchTransaction2.Reset();//GST Filter
                         recPurchTransaction2.SetRange("External Document No", recGSTData."Invoice No");
                         if recPurchTransaction2.FindFirst() then begin
                             if (recPurchTransaction2."Document Date" <> recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" <> recGSTData."Taxable Amount") then

@@ -1,20 +1,31 @@
 page 50197 "GST Reco Compare"
 {
     ApplicationArea = all;
-    PageType = List;
+    PageType = Card;
     layout
     {
         area(Content)
         {
-            part(Purchasetransactions; Purchasetransactions)
+            field(cdGstNo; cdGstNo)
             {
-                Caption = 'Purchase Transactions';
+                Caption = 'GST No.';
                 ApplicationArea = all;
+                TableRelation = "GST Registration Nos.";
             }
-            part(GSTReco; GSTRDump)
+
+            group(ComparePart)
             {
-                Caption = 'GSTR Data';
-                ApplicationArea = all;
+                Caption = 'GST Reco';
+                part(Purchasetransactions; Purchasetransactions)
+                {
+                    Caption = 'Purchase Transactions';
+                    ApplicationArea = all;
+                }
+                part(GSTReco; GSTRDump)
+                {
+                    Caption = 'GSTR Data';
+                    ApplicationArea = all;
+                }
             }
         }
     }
@@ -32,4 +43,6 @@ page 50197 "GST Reco Compare"
             }
         }
     }
+    var
+        cdGstNo: Code[15];
 }
