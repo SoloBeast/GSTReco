@@ -434,22 +434,32 @@ page 50195 Iappc_Admin_Role_Center2
                 group(GST_Reco)
                 {
                     Caption = 'GSTR_Dump';
+                    action(uploadGSTFile)
+                    {
+                        Caption = 'Upload GST File';
+                        ApplicationArea = all;
+                        Image = Import;
+                        RunObject = codeunit "Import GST  Data";
+                    }
                     Action(GSTRDump)
                     {
                         Caption = 'GSTR Dump';
                         ApplicationArea = all;
+                        Image = DataEntry;
                         RunObject = page GSTRDump;
                     }
                     Action(PurchaseTransactions)
                     {
                         Caption = 'Purchase Transacions';
                         ApplicationArea = all;
+                        Image = Purchase;
                         RunObject = page Purchasetransactions;
                     }
                     action(GSTRCompare)
                     {
                         Caption = 'GSTR Compare';
                         ApplicationArea = all;
+                        Image = CompareCost;
                         RunObject = page "GST Reco Compare";
                     }
 
