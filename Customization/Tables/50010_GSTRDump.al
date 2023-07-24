@@ -157,6 +157,14 @@ table 50010 GSTRDump
             DataClassification = ToBeClassified;
 
         }
+        field(31; "Error"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(32; "Error Description"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
     // keys
     // {

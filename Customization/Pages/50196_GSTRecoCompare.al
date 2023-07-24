@@ -18,4 +18,18 @@ page 50197 "GST Reco Compare"
             }
         }
     }
+    actions
+    {
+        area(Processing)
+        {
+            action(CheckData)
+            {
+                Caption = 'Reconcile Data';
+                ApplicationArea = all;
+                Promoted = true;
+                PromotedCategory = Process;
+                RunObject = codeunit "GST Reco";
+            }
+        }
+    }
 }
