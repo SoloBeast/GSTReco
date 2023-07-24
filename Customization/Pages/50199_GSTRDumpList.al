@@ -168,29 +168,4 @@ page 50199 GSTRDump
             }
         }
     }
-
-    actions
-    {
-        area(Processing)
-        {
-            action(ActionName)
-            {
-                ApplicationArea = All;
-
-                trigger OnAction();
-                begin
-
-                end;
-            }
-            action(uploadGSTFile)
-            {
-                Caption = 'Upload GST File';
-                ApplicationArea = all;
-                Promoted = true;
-                PromotedCategory = Process;
-                Image = Import;
-                RunObject = codeunit "Import GST  Data";
-            }
-        }
-    }
 }
