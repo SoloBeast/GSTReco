@@ -102,6 +102,10 @@ table 50012 PurchaseTransactions
         {
             DataClassification = ToBeClassified;
         }
+        field(20; "Match"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
 
     }
     var

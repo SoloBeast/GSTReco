@@ -165,6 +165,10 @@ table 50010 GSTRDump
         {
             DataClassification = ToBeClassified;
         }
+        field(33; "Match"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
     }
     // keys
     // {

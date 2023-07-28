@@ -21,29 +21,38 @@ codeunit 50010 "GST Reco"
                     repeat
                         //Extact Invoice Number
                         recPurchTransaction2.Reset();//GST Filter
+                        recPurchTransaction2.SetRange("Vendor GST No.", recGSTData."GSTIN Supplier");
                         recPurchTransaction2.SetRange("External Document No", recGSTData."Invoice No");
                         if recPurchTransaction2.FindFirst() then begin
                             if (recPurchTransaction2."Document Date" <> recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" <> recGSTData."Taxable Amount") then
-                                DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Date and Amount Mismatched. ' + txtMultipleInvNo, Format(recErrorLog.Status::Pending))
-                            else begin
-                                if (recPurchTransaction2."Document Date" = recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" <> recGSTData."Taxable Amount") then
-                                    DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Date Mismatched. ' + txtMultipleInvNo, Format(recErrorLog.Status::Pending))
-                            end;
+                                DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Date and Amount Mismatched. ' + txtMultipleInvNo, Format(recErrorLog.Status::Pending));
 
+                            if (recPurchTransaction2."Document Date" = recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" <> recGSTData."Taxable Amount") then
+                                DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Amount Mismatched. ' + txtMultipleInvNo, Format(recErrorLog.Status::Pending));
+
+                            if (recPurchTransaction2."Document Date" <> recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" = recGSTData."Taxable Amount") then
+                                DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Date Mismatched. ' + txtMultipleInvNo, Format(recErrorLog.Status::Pending));
+
+                            if (recPurchTransaction2."Document Date" = recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" = recGSTData."Taxable Amount") then
+                                recGSTData.Match := true;
+                            recGSTData.Modify();
                         end
                         Else begin
+                            recGSTData.Error := true;
+                            recGSTData.Match := false;
+                            recGSTData."Error Description" := 'GST Not found in Purchase Transaction';
                             //Partial Invoice Number
-                            recPurchTransaction2.Reset();
-                            recPurchTransaction2.SetFilter("External Document No", '@*%1', recGSTData."Invoice No");
-                            if recPurchTransaction2.FindSet() then begin
-                                repeat
-                                    if txtMultipleInvNo <> '' then
-                                        txtMultipleInvNo += ', ' + recPurchTransaction2."External Document No"
-                                    else
-                                        txtMultipleInvNo := recPurchTransaction2."External Document No";
-                                until recPurchTransaction2.Next() = 0;
-                                DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Partial Matched with Document No: ' + txtMultipleInvNo, Format(recErrorLog.Status::Pending));
-                            end;
+                            // recPurchTransaction2.Reset();
+                            // recPurchTransaction2.SetFilter("External Document No", '@*%1', recGSTData."Invoice No");
+                            // if recPurchTransaction2.FindSet() then begin
+                            //     repeat
+                            //         if txtMultipleInvNo <> '' then
+                            //             txtMultipleInvNo += ', ' + recPurchTransaction2."External Document No"
+                            //         else
+                            //             txtMultipleInvNo := recPurchTransaction2."External Document No";
+                            //     until recPurchTransaction2.Next() = 0;
+                            //     DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Partial Matched with Document No: ' + txtMultipleInvNo, Format(recErrorLog.Status::Pending));
+                            // end;
                         end;
                     until recPurchTransaction1.Next() = 0;
                 end
