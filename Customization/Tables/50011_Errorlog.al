@@ -44,6 +44,10 @@ table 50011 "Error Log"
         {
             DataClassification = ToBeClassified;
         }
+        field(9; "Partially Matched"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
 }

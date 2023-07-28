@@ -5,7 +5,7 @@ page 50198 Purchasetransactions
     UsageCategory = Lists;
     SourceTable = PurchaseTransactions;
     Editable = true;
-
+    SourceTableView = sorting("Vendor GST No.");
     layout
     {
         area(Content)
@@ -92,6 +92,10 @@ page 50198 Purchasetransactions
                 field("Error Details"; Rec."Error Details")
                 {
                     ApplicationArea = All;
+                }
+                field(Match; Rec.Match)
+                {
+                    ApplicationArea = all;
                 }
             }
         }

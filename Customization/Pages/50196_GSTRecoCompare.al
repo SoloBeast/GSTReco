@@ -39,7 +39,17 @@ page 50197 "GST Reco Compare"
                 ApplicationArea = all;
                 Promoted = true;
                 PromotedCategory = Process;
-                RunObject = codeunit "GST Reco";
+                Image = Reconcile;
+
+                trigger OnAction()
+                var
+                    cuGStReconcile: Codeunit "GST Reco";
+                begin
+                    Clear(cuGStReconcile);
+                    if cdGstNo <> '' then
+                        cuGStReconcile.setParameter(cdGstNo);
+                    cuGStReconcile.Run();
+                end;
             }
         }
     }

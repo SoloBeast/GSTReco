@@ -108,27 +108,12 @@ table 50012 PurchaseTransactions
         }
 
     }
-    var
-        myInt: Integer;
-
-    trigger OnInsert()
-    begin
-
-    end;
-
-    trigger OnModify()
-    begin
-
-    end;
-
-    trigger OnDelete()
-    begin
-
-    end;
-
-    trigger OnRename()
-    begin
-
-    end;
+    keys
+    {
+        key(UK; "Vendor GST No.")
+        {
+            Clustered = false;
+        }
+    }
 
 }

@@ -5,6 +5,7 @@ page 50199 GSTRDump
     UsageCategory = Lists;
     SourceTable = GSTRDump;
     Editable = false;
+    SourceTableView = sorting("GSTIN Supplier");
 
     layout
     {
@@ -162,7 +163,10 @@ page 50199 GSTRDump
                     ApplicationArea = All;
 
                 }
-
+                field(Match; Rec.Match)
+                {
+                    ApplicationArea = all;
+                }
 
 
             }
