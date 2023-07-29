@@ -1,4 +1,3 @@
-//Abhishek Changes
 
 table 50012 PurchaseTransactions
 {
