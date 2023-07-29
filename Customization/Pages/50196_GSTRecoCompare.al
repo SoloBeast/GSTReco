@@ -51,6 +51,15 @@ page 50197 "GST Reco Compare"
                     cuGStReconcile.Run();
                 end;
             }
+            action(ErrorLog)
+            {
+                Caption = 'Error Log';
+                ApplicationArea = all;
+                Promoted = true;
+                PromotedCategory = Report;
+                Image = Log;
+                RunObject = page "GST Reco Error Log";
+            }
         }
     }
     var
