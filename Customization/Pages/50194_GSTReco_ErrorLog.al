@@ -46,4 +46,26 @@ page 50194 "GST Reco Error Log"
             }
         }
     }
+    actions
+    {
+        area(Processing)
+        {
+            action(clear)
+            {
+                Caption = 'Clear Error Log';
+                ApplicationArea = all;
+                Promoted = true;
+                PromotedCategory = Process;
+
+                trigger OnAction()
+                var
+                    cuGstReco: Codeunit "GST Reco";
+                begin
+                    Clear(cuGstReco);
+                    cuGstReco.deleteErrorLog();
+                    CurrPage.Update();
+                end;
+            }
+        }
+    }
 }
