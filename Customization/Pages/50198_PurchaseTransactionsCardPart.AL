@@ -1,6 +1,6 @@
 page 50198 Purchasetransactions
 {
-    PageType = ListPart;
+    PageType = CardPart;
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = PurchaseTransactions;
