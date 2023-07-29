@@ -28,21 +28,23 @@ codeunit 50010 "GST Reco"
                         recPurchTransaction2.SetRange("Vendor GST No.", recPurchTransaction1."Vendor GST No.");
                         recPurchTransaction2.SetRange("External Document No", recGSTData."Invoice No");
                         if recPurchTransaction2.FindFirst() then begin
-                            if (recPurchTransaction2."Document Date" <> recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" <> recGSTData."Taxable Amount") then
-                                DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Date and Amount Mismatched in Purchase Data.', Format(recErrorLog.Status::Pending), false);
+                            repeat
+                                if (recPurchTransaction2."Document Date" <> recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" <> recGSTData."Taxable Amount") then
+                                    DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Date and Amount Mismatched in Purchase Data.', Format(recErrorLog.Status::Pending), false);
 
-                            if (recPurchTransaction2."Document Date" = recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" <> recGSTData."Taxable Amount") then
-                                DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Amount Mismatched  in Purchase Data.', Format(recErrorLog.Status::Pending), false);
+                                if (recPurchTransaction2."Document Date" = recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" <> recGSTData."Taxable Amount") then
+                                    DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Amount Mismatched  in Purchase Data.', Format(recErrorLog.Status::Pending), false);
 
-                            if (recPurchTransaction2."Document Date" <> recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" = recGSTData."Taxable Amount") then
-                                DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Date Mismatched in Purchase Data.', Format(recErrorLog.Status::Pending), false);
+                                if (recPurchTransaction2."Document Date" <> recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" = recGSTData."Taxable Amount") then
+                                    DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Date Mismatched in Purchase Data.', Format(recErrorLog.Status::Pending), false);
 
-                            if (recPurchTransaction2."Document Date" = recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" = recGSTData."Taxable Amount") then begin
-                                recGSTData.Match := true;
-                                recPurchTransaction2.Match := true;
-                            end;
-                            recGSTData.Modify();
-                            recPurchTransaction2.Modify();
+                                if (recPurchTransaction2."Document Date" = recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" = recGSTData."Taxable Amount") then begin
+                                    recGSTData.Match := true;
+                                    recPurchTransaction2.Match := true;
+                                end;
+                                recGSTData.Modify();
+                                recPurchTransaction2.Modify();
+                            until recPurchTransaction2.Next() = 0;
                         end
                         Else begin
                             recGSTData.Error := true;
@@ -124,6 +126,14 @@ codeunit 50010 "GST Reco"
     procedure setParameter(InputGSTNo: Code[15])
     begin
         cdUserInputGST := InputGSTNo;
+    end;
+
+    procedure deleteErrorLog()
+    var
+        recErrorLogdel: Record "Error Log";
+    begin
+        recErrorLogdel.Reset();
+        recErrorLogdel.DeleteAll();
     end;
 
     var
