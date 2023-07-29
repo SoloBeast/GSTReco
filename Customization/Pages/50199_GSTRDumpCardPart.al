@@ -1,6 +1,6 @@
 page 50199 GSTRDump
 {
-    PageType = ListPart;
+    PageType = CardPart;
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = GSTRDump;
