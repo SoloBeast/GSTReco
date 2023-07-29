@@ -84,13 +84,13 @@ codeunit 50010 "GST Reco"
                         if recGSTDataP2.FindSet() then begin
                             repeat
                                 if (recGSTDataP2."Invocie Date" = recPurchTransactionP."Document Date") and (recGSTDataP2."Taxable Amount" = recPurchTransactionP."Taxable Amount") then
-                                    DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'Invoice No. Partially Matched in GST Data.', Format(recErrorLog.Status::Pending), true);
+                                    DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'Invoice No. (' + recPurchTransactionP.Invoice No + ') Partially Matched in GST Data.', Format(recErrorLog.Status::Pending), true);
 
                                 if (recGSTDataP2."Invocie Date" <> recPurchTransactionP."Document Date") and (recGSTDataP2."Taxable Amount" = recPurchTransactionP."Taxable Amount") then
-                                    DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'Invoice No. Partially Matched with amount in GST Data.', Format(recErrorLog.Status::Pending), true);
+                                    DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'Invoice No.(' + recPurchTransactionP.Invoice No + ') Partially Matched with amount in GST Data.', Format(recErrorLog.Status::Pending), true);
 
                                 if (recGSTDataP2."Invocie Date" = recPurchTransactionP."Document Date") and (recGSTDataP2."Taxable Amount" <> recPurchTransactionP."Taxable Amount") then
-                                    DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'Invoice No. Partially Matched with Date in GST Data.', Format(recErrorLog.Status::Pending), true);
+                                    DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'Invoice No.(' + recPurchTransactionP.Invoice No + ') Partially Matched with Date in GST Data.', Format(recErrorLog.Status::Pending), true);
 
                             until recGSTDataP2.Next() = 0;
                         end
