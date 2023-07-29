@@ -172,6 +172,10 @@ table 50010 GSTRDump
     }
     keys
     {
+        key(PK; "Entry No.")
+        {
+            Clustered = true;
+        }
         key(UK; "GSTIN Supplier")
         {
             Clustered = false;

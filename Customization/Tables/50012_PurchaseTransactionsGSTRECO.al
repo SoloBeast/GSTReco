@@ -110,6 +110,10 @@ table 50012 PurchaseTransactions
     }
     keys
     {
+        key(PK; "Entry No.")
+        {
+            Clustered = true;
+        }
         key(UK; "Vendor GST No.")
         {
             Clustered = false;
