@@ -29,16 +29,16 @@ codeunit 50010 "GST Reco"
                         recPurchTransaction2.SetRange("External Document No", recGSTData."Invoice No");
                         if recPurchTransaction2.FindFirst() then begin
                             repeat
-                                if (recPurchTransaction2."Document Date" <> recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" <> recGSTData."Taxable Amount") then
+                                if (recPurchTransaction2."Document Date" <> recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Value" <> recGSTData."Taxable Value") then
                                     DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Date and Amount Mismatched in Purchase Data.', Format(recErrorLog.Status::Pending), false);
 
-                                if (recPurchTransaction2."Document Date" = recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" <> recGSTData."Taxable Amount") then
+                                if (recPurchTransaction2."Document Date" = recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Value" <> recGSTData."Taxable Value") then
                                     DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Amount Mismatched  in Purchase Data.', Format(recErrorLog.Status::Pending), false);
 
-                                if (recPurchTransaction2."Document Date" <> recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" = recGSTData."Taxable Amount") then
+                                if (recPurchTransaction2."Document Date" <> recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Value" = recGSTData."Taxable Value") then
                                     DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Date Mismatched in Purchase Data.', Format(recErrorLog.Status::Pending), false);
 
-                                if (recPurchTransaction2."Document Date" = recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Amount" = recGSTData."Taxable Amount") then begin
+                                if (recPurchTransaction2."Document Date" = recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Value" = recGSTData."Taxable Value") then begin
                                     recGSTData.Match := true;
                                     recPurchTransaction2.Match := true;
                                 end;
@@ -85,13 +85,13 @@ codeunit 50010 "GST Reco"
                         recGSTDataP2.SetFilter("Invoice No", '@*%1', recPurchTransactionP."External Document No");
                         if recGSTDataP2.FindSet() then begin
                             repeat
-                                if (recGSTDataP2."Invocie Date" = recPurchTransactionP."Document Date") and (recGSTDataP2."Taxable Amount" = recPurchTransactionP."Taxable Amount") then
+                                if (recGSTDataP2."Invocie Date" = recPurchTransactionP."Document Date") and (recGSTDataP2."Taxable Value" = recPurchTransactionP."Taxable Value") then
                                     DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'Invoice No. (' + recPurchTransactionP."External Document No" + ') Partially Matched in GST Data.', Format(recErrorLog.Status::Pending), true);
 
-                                if (recGSTDataP2."Invocie Date" <> recPurchTransactionP."Document Date") and (recGSTDataP2."Taxable Amount" = recPurchTransactionP."Taxable Amount") then
+                                if (recGSTDataP2."Invocie Date" <> recPurchTransactionP."Document Date") and (recGSTDataP2."Taxable Value" = recPurchTransactionP."Taxable Value") then
                                     DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'Invoice No.(' + recPurchTransactionP."External Document No" + ') Partially Matched with amount in GST Data.', Format(recErrorLog.Status::Pending), true);
 
-                                if (recGSTDataP2."Invocie Date" = recPurchTransactionP."Document Date") and (recGSTDataP2."Taxable Amount" <> recPurchTransactionP."Taxable Amount") then
+                                if (recGSTDataP2."Invocie Date" = recPurchTransactionP."Document Date") and (recGSTDataP2."Taxable Value" <> recPurchTransactionP."Taxable Value") then
                                     DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'Invoice No.(' + recPurchTransactionP."External Document No" + ') Partially Matched with Date in GST Data.', Format(recErrorLog.Status::Pending), true);
 
                             until recGSTDataP2.Next() = 0;

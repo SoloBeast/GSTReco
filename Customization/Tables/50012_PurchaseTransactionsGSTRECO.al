@@ -72,7 +72,7 @@ table 50012 PurchaseTransactions
             DataClassification = ToBeClassified;
 
         }
-        field(14; "Taxable Amount"; Decimal)
+        field(14; "Taxable Value"; Decimal)
         {
             DataClassification = ToBeClassified;
 

@@ -85,7 +85,7 @@ page 50196 PurchasetransactionList
                     ApplicationArea = All;
 
                 }
-                field("Taxable Amount"; Rec."Taxable Amount")
+                field("Taxable Amount"; Rec."Taxable Value")
                 {
                     ApplicationArea = All;
 

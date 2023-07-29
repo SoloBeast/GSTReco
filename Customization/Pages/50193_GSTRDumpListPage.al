@@ -1,7 +1,7 @@
 page 50193 GSTRDumpList
 {
     Caption = 'GSTR Dump';
-    PageType = CardPart;
+    PageType = List;
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = GSTRDump;

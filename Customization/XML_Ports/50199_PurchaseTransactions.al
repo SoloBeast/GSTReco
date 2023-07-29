@@ -96,7 +96,7 @@ xmlport 50199 "Purchase Transactions"
                         Evaluate(recPurchTrans."CGST Value", CgstValue);
                         Evaluate(recPurchTrans."External Document No", ExternalDocumentNo);
                         Evaluate(recPurchTrans."Document Date", DocumentDate);
-                        Evaluate(recPurchTrans."Taxable Amount", TaxableValue);
+                        Evaluate(recPurchTrans."Taxable Value", TaxableValue);
 
                         recPurchTrans.Insert();
                     end;

@@ -84,7 +84,7 @@ page 50198 Purchasetransactions
                     ApplicationArea = All;
 
                 }
-                field("Taxable Amount"; Rec."Taxable Amount")
+                field("Taxable Amount"; Rec."Taxable Value")
                 {
                     ApplicationArea = All;
 
