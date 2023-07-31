@@ -131,9 +131,16 @@ codeunit 50010 "GST Reco"
     procedure deleteErrorLog()
     var
         recErrorLogdel: Record "Error Log";
+        recGSTR: Record GSTRDump;
+        recpur: Record PurchaseTransactions;
     begin
         recErrorLogdel.Reset();
         recErrorLogdel.DeleteAll();
+
+        recGSTR.Reset();
+        recGSTR.ModifyAll(Match, false);
+        recpur.Reset();
+        recpur.ModifyAll(Match, false);
     end;
 
     var

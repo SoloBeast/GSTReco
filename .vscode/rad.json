@@ -1,1 +1,1 @@
-﻿{"Added":[{"Id":50199,"Kind":15,"Name":"Purchase Transactions","PackagePath":"/src/Customization/XML_Ports/50199_PurchaseTransactions.al"}],"Modified":[{"Id":50012,"Kind":10,"Name":"PurchaseTransactions","PackagePath":"/src/Customization/Tables/50012_PurchaseTransactionsGSTRECO.al"},{"Id":50197,"Kind":12,"Name":"GST Reco Compare","PackagePath":"/src/Customization/Pages/50196_GSTRecoCompare.al"}],"Removed":[]}
+﻿{"Added":[],"Modified":[],"Removed":[]}
