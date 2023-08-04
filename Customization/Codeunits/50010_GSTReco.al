@@ -13,10 +13,8 @@ codeunit 50010 "GST Reco"
     begin
         recGSTData.Reset();
         recGSTData.SetRange(Match, false);
-
         if cdUserInputGST <> '' then
             recGSTData.SetRange("GSTIN Supplier", cdUserInputGST);
-
         if recGSTData.FindSet() then begin
             repeat
                 recPurchTransaction1.Reset();
