@@ -12,6 +12,7 @@ codeunit 50010 "GST Reco"
         recGSTData: Record GSTRDump;
     begin
         Clear(qryGSTReco);
+        qryGSTReco.SetRange(Match, false);
         qryGSTReco.Open();
         while qryGSTReco.Read() do begin
             blnGSTExist := false;
@@ -78,6 +79,7 @@ codeunit 50010 "GST Reco"
 
             // until recGSTData.Next() = 0;
         end;
+        qryGSTReco.Close();
         CheckDataPurchInGST();
     end;
 
