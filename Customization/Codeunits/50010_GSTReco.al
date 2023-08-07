@@ -11,50 +11,72 @@ codeunit 50010 "GST Reco"
         recPurchTransaction2: Record PurchaseTransactions;
         recGSTData: Record GSTRDump;
     begin
-        recGSTData.Reset();
-        recGSTData.SetRange(Match, false);
-        if cdUserInputGST <> '' then
-            recGSTData.SetRange("GSTIN Supplier", cdUserInputGST);
-        if recGSTData.FindSet() then begin
-            repeat
-                recPurchTransaction1.Reset();
-                recPurchTransaction1.SetRange("Vendor GST No.", recGSTData."GSTIN Supplier");
-                if recPurchTransaction1.FindSet() then begin
+        Clear(qryGSTReco);
+        qryGSTReco.Open();
+        while qryGSTReco.Read() do begin
+            blnGSTExist := false;
+            recGSTData.Reset();
+            recGSTData.SetRange("Entry No.", qryGSTReco.Entry_No_);
+            recGSTData.FindFirst();
+            // end;
+            // recGSTData.Reset();
+            // recGSTData.SetRange(Match, false);
+            // if cdUserInputGST <> '' then
+            //     recGSTData.SetRange("GSTIN Supplier", cdUserInputGST);
+            // if recGSTData.FindSet() then begin
+            // repeat
+            recPurchTransaction1.Reset();
+            recPurchTransaction1.SetRange("Vendor GST No.", qryGSTReco.GSTIN_Supplier);
+            if recPurchTransaction1.FindFirst() then begin
+                blnGSTExist := true;
+            End
+            else
+                DML_ErrorLog(qryGSTReco.Entry_No_, qryGSTReco.Invoice_No, 'Gst number not found  in Purchase Transaction.', Format(recErrorLog.Status::Pending), false);
+
+            if blnGSTExist = true then begin
+
+                //Extact GST Number
+                // if qryGSTReco.Invoice_No = 'CR947' then
+                //     Message('CR947');
+
+                recPurchTransaction2.Reset();
+                recPurchTransaction2.SetRange("Vendor GST No.", qryGSTReco.GSTIN_Supplier);
+                recPurchTransaction2.SetRange("External Document No", qryGSTReco.Invoice_No);
+                recPurchTransaction2.SetRange(Match, false);
+                if recPurchTransaction2.FindFirst() then begin
                     repeat
-                        //Extact GST Number
-                        recPurchTransaction2.Reset();
-                        recPurchTransaction2.SetRange("Vendor GST No.", recPurchTransaction1."Vendor GST No.");
-                        recPurchTransaction2.SetRange("External Document No", recGSTData."Invoice No");
-                        if recPurchTransaction2.FindFirst() then begin
-                            repeat
-                                if (recPurchTransaction2."Document Date" <> recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Value" <> recGSTData."Taxable Value") then
-                                    DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Date and Amount Mismatched in Purchase Data.', Format(recErrorLog.Status::Pending), false);
+                        if (recPurchTransaction2."Document Date" = qryGSTReco.Invocie_Date) and (recPurchTransaction2."Taxable Value" = qryGSTReco.Taxable_Value) then begin
+                            recGSTData.Match := true;
+                            recPurchTransaction2.Match := true;
 
-                                if (recPurchTransaction2."Document Date" = recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Value" <> recGSTData."Taxable Value") then
-                                    DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Amount Mismatched  in Purchase Data.', Format(recErrorLog.Status::Pending), false);
-
-                                if (recPurchTransaction2."Document Date" <> recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Value" = recGSTData."Taxable Value") then
-                                    DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Date Mismatched in Purchase Data.', Format(recErrorLog.Status::Pending), false);
-
-                                if (recPurchTransaction2."Document Date" = recGSTData."Invocie Date") and (recPurchTransaction2."Taxable Value" = recGSTData."Taxable Value") then begin
-                                    recGSTData.Match := true;
-                                    recPurchTransaction2.Match := true;
-                                end;
-                                recGSTData.Modify();
-                                recPurchTransaction2.Modify();
-                            until recPurchTransaction2.Next() = 0;
-                        end
-                        Else begin
-                            recGSTData.Error := true;
-                            recGSTData.Match := false;
-                            recGSTData."Error Description" := 'Invoice No. Not found in Purchase Transaction';
                             recGSTData.Modify();
+                            recPurchTransaction2.Modify();
+                            break;
                         end;
-                    until recPurchTransaction1.Next() = 0;
+
+                        if (recPurchTransaction2."Document Date" <> qryGSTReco.Invocie_Date) and (recPurchTransaction2."Taxable Value" <> qryGSTReco.Taxable_Value) then
+                            DML_ErrorLog(qryGSTReco.Entry_No_, qryGSTReco.Invoice_No, 'Date and Amount Mismatched in Purchase Data.', Format(recErrorLog.Status::Pending), false);
+
+                        if (recPurchTransaction2."Document Date" = qryGSTReco.Invocie_Date) and (recPurchTransaction2."Taxable Value" <> qryGSTReco.Taxable_Value) then
+                            DML_ErrorLog(qryGSTReco.Entry_No_, qryGSTReco.Invoice_No, 'Amount Mismatched  in Purchase Data.', Format(recErrorLog.Status::Pending), false);
+
+                        if (recPurchTransaction2."Document Date" <> qryGSTReco.Invocie_Date) and (recPurchTransaction2."Taxable Value" = qryGSTReco.Taxable_Value) then
+                            DML_ErrorLog(qryGSTReco.Entry_No_, qryGSTReco.Invoice_No, 'Date Mismatched in Purchase Data.', Format(recErrorLog.Status::Pending), false);
+
+                        recGSTData.Modify();
+                        recPurchTransaction2.Modify();
+                    until recPurchTransaction2.Next() = 0;
                 end
-                else
-                    DML_ErrorLog(recGSTData."Entry No.", recGSTData."Invoice No", 'Gst number not found  in Purchase Transaction.', Format(recErrorLog.Status::Pending), false);
-            until recGSTData.Next() = 0;
+                Else begin
+                    recGSTData.Error := true;
+                    recGSTData.Match := false;
+                    recGSTData."Error Description" := 'Invoice No. Not found in Purchase Transaction';
+                    recGSTData.Modify();
+                end;
+            end;
+            // end
+
+            // until recGSTData.Next() = 0;
         end;
         CheckDataPurchInGST();
     end;
@@ -144,4 +166,6 @@ codeunit 50010 "GST Reco"
     var
         recErrorLog: Record "Error Log";
         cdUserInputGST: Code[15];
+        qryGSTReco: Query "GST Reco";
+        blnGSTExist: Boolean;
 }

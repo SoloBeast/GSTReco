@@ -5,6 +5,7 @@ query 50199 "GST Reco"
     {
         dataitem(GSTRDump; GSTRDump)
         {
+            column(Entry_No_; "Entry No.") { }
             column(GSTIN_Supplier; "GSTIN Supplier") { }
             column(Invoice_No; "Invoice No") { }
             column(Invocie_Date; "Invocie Date") { }
