@@ -446,14 +446,14 @@ page 50195 Iappc_Admin_Role_Center2
                         Caption = 'GSTR Dump';
                         ApplicationArea = all;
                         Image = DataEntry;
-                        RunObject = page GSTRDump;
+                        RunObject = page GSTRDumpList;
                     }
                     Action(PurchaseTransactions)
                     {
                         Caption = 'Purchase Transacions';
                         ApplicationArea = all;
                         Image = Purchase;
-                        RunObject = page Purchasetransactions;
+                        RunObject = page PurchasetransactionList;
                     }
                     action(GSTRCompare)
                     {

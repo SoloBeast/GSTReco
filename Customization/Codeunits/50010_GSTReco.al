@@ -13,6 +13,8 @@ codeunit 50010 "GST Reco"
     begin
         Clear(qryGSTReco);
         qryGSTReco.SetRange(Match, false);
+        if cdUserInputGST <> '' then
+            qryGSTReco.SetFilter(GSTIN_SupplierFilter, cdUserInputGST);
         qryGSTReco.Open();
         while qryGSTReco.Read() do begin
             blnGSTExist := false;
@@ -101,27 +103,27 @@ codeunit 50010 "GST Reco"
                 recGSTDataP.SetRange(Match, false);
                 recGSTDataP.SetRange("GSTIN Supplier", recPurchTransactionP."Vendor GST No.");
                 if recGSTDataP.FindSet() then begin
-                    repeat
-                        recGSTDataP2.Reset();
-                        recGSTDataP2.SetRange("GSTIN Supplier", recGSTDataP."GSTIN Supplier");
-                        recGSTDataP2.SetFilter("Invoice No", '@*%1', recPurchTransactionP."External Document No");
-                        if recGSTDataP2.FindSet() then begin
-                            repeat
-                                if (recGSTDataP2."Invocie Date" = recPurchTransactionP."Document Date") and (recGSTDataP2."Taxable Value" = recPurchTransactionP."Taxable Value") then
-                                    DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'Invoice No. (' + recPurchTransactionP."External Document No" + ') Partially Matched in GST Data.', Format(recErrorLog.Status::Pending), true);
+                    // repeat
+                    recGSTDataP2.Reset();
+                    recGSTDataP2.SetRange("GSTIN Supplier", recGSTDataP."GSTIN Supplier");
+                    recGSTDataP2.SetFilter("Invoice No", '%1', '*' + recPurchTransactionP."External Document No" + '*');
+                    if recGSTDataP2.FindSet() then begin
+                        repeat
+                            if (recGSTDataP2."Invocie Date" = recPurchTransactionP."Document Date") and (recGSTDataP2."Taxable Value" = recPurchTransactionP."Taxable Value") then
+                                DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'Invoice No. (' + recPurchTransactionP."External Document No" + ') Partially Matched in GST Data.', Format(recErrorLog.Status::Pending), true);
 
-                                if (recGSTDataP2."Invocie Date" <> recPurchTransactionP."Document Date") and (recGSTDataP2."Taxable Value" = recPurchTransactionP."Taxable Value") then
-                                    DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'Invoice No.(' + recPurchTransactionP."External Document No" + ') Partially Matched with amount in GST Data.', Format(recErrorLog.Status::Pending), true);
+                            if (recGSTDataP2."Invocie Date" <> recPurchTransactionP."Document Date") and (recGSTDataP2."Taxable Value" = recPurchTransactionP."Taxable Value") then
+                                DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'Invoice No.(' + recPurchTransactionP."External Document No" + ') Partially Matched with amount in GST Data.', Format(recErrorLog.Status::Pending), true);
 
-                                if (recGSTDataP2."Invocie Date" = recPurchTransactionP."Document Date") and (recGSTDataP2."Taxable Value" <> recPurchTransactionP."Taxable Value") then
-                                    DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'Invoice No.(' + recPurchTransactionP."External Document No" + ') Partially Matched with Date in GST Data.', Format(recErrorLog.Status::Pending), true);
+                            if (recGSTDataP2."Invocie Date" = recPurchTransactionP."Document Date") and (recGSTDataP2."Taxable Value" <> recPurchTransactionP."Taxable Value") then
+                                DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'Invoice No.(' + recPurchTransactionP."External Document No" + ') Partially Matched with Date in GST Data.', Format(recErrorLog.Status::Pending), true);
 
-                            until recGSTDataP2.Next() = 0;
-                        end
-                        else
-                            DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'Invoice No. not found in GST Data.', Format(recErrorLog.Status::Pending), false);
+                        until recGSTDataP2.Next() = 0;
+                    end
+                    else
+                        DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'Invoice No. not found in GST Data.', Format(recErrorLog.Status::Pending), false);
 
-                    until recGSTDataP.Next() = 0;
+                    // until recGSTDataP.Next() = 0;
                 end
                 else
                     DML_ErrorLog(recPurchTransactionP."Entry No.", recPurchTransactionP."External Document No", 'GST No. not found in GST Data.', Format(recErrorLog.Status::Pending), false);

@@ -106,14 +106,14 @@ page 50196 PurchasetransactionList
     {
         area(Processing)
         {
-            action(ActionName)
+            action(ImportTransactions)
             {
+                Caption = 'Import Transactions';
                 ApplicationArea = All;
-
-                trigger OnAction();
-                begin
-
-                end;
+                Image = Import;
+                Promoted = true;
+                PromotedCategory = New;
+                RunObject = xmlport "Purchase Transactions";
             }
         }
     }

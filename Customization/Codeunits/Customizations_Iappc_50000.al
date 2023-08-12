@@ -200,8 +200,8 @@ codeunit 50000 "Iappc Customization"
     begin
         SalesHeader.TestField("Internal Document Type");
 
-        if (SalesHeader."Created By" = UserId) and (PreviewMode = false) then
-            Error('The document can not be posted by the user who created the same.');
+        // if (SalesHeader."Created By" = UserId) and (PreviewMode = false) then
+        //     Error('The document can not be posted by the user who created the same.');
 
         if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then begin
             if (SalesHeader.Ship = false) or (SalesHeader.Invoice = false) then
@@ -682,8 +682,8 @@ codeunit 50000 "Iappc Customization"
     begin
         PurchaseHeader.TestField("Internal Document Type");
 
-        if (PurchaseHeader."Created By" = UserId) and (PreviewMode = false) then
-            Error('The document can not be posted by the user who created the same.');
+        // if (PurchaseHeader."Created By" = UserId) and (PreviewMode = false) then
+        //     Error('The document can not be posted by the user who created the same.');
 
         recPurchComments.Reset();
         recPurchComments.SetRange("Document Type", PurchaseHeader."Document Type");
